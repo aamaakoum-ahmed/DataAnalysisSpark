@@ -12,4 +12,28 @@ Symbol : L'identifiant de l'entreprise (ex: AAPL pour Apple, TSLA pour Tesla).
 Open / Close : Le prix au début et à la fin de la journée.
 High / Low : Le point le plus haut et le plus bas atteint durant la journée.
 Volume : Le nombre total d'actions échangées.
+-----------------------------------------------------------------------------------------------------------
 
+Question 1: Quelles sont les 10 actions avec le plus gros volume d'échange moyen?
+
+println("\n[ANALYSE] Top 10 des actions les plus échangées (Volume moyen) :")
+dfFinal.groupBy("Symbol")
+  .agg(avg("Volume").as("Volume_Moyen"))
+  .orderBy(desc("Volume_Moyen"))
+  .show(10)
+
+Question 2: Évolution annuelle du prix moyen du S&P500
+println("\n[ANALYSE] Évolution du prix de clôture moyen par année :")
+dfFinal.withColumn("Annee", year(col("Date")))
+  .groupBy("Annee")
+  .agg(avg("Close").as("Prix_Moyen"))
+  .orderBy("Annee")
+  .show()
+
+Question 3: Le "Flash Crash" (La plus grosse chute en une journée)
+
+println("\n[ANALYSE] Top 5 des journées les plus volatiles (High vs Low) :")
+dfFinal.withColumn("Difference", col("High") - col("Low"))
+  .orderBy(desc("Difference"))
+  .select("Date", "Symbol", "High", "Low", "Difference")
+  .show(5)
