@@ -1,13 +1,11 @@
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.functions._
 
 val sparkSession = spark 
 println("=== Chargement des données S&P 500 ===")
 
 // Chargement du Dataset
-val df = sparkSession.read
-  .option("header", "true")
-  .option("inferSchema", "true")
-  .csv("/data/sp500/sp500_stock_price.csv")
+val df = sparkSession.read.option("header", "true").option("inferSchema", "true").csv("/data/sp500/sp500_stock_price.csv")
 
 // 1. Affichage du schema
 println("Schema des donnees :")
