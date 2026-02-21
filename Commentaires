@@ -1,0 +1,15 @@
+l'option inferSchema en pratique n'est pas parfaite: elle scanne une partie de fichier 
+** Analyse du Schema automatique:
+- Date string (ou timestamp)
+- Open, high, low, close, adj Close, : double
+- Volume: integer ou long
+- Symbol : string
+--> Spark charge des date sous forme de string, pour faire des analyses exemple moyennes par mois, pour plus de performance on définit le schema manuellement 
+--> On utilise StructType
+--> le contenu de la table
+Date : Le jour de la cotation (format Date net, pas une chaîne de caractères).
+Symbol : L'identifiant de l'entreprise (ex: AAPL pour Apple, TSLA pour Tesla).
+Open / Close : Le prix au début et à la fin de la journée.
+High / Low : Le point le plus haut et le plus bas atteint durant la journée.
+Volume : Le nombre total d'actions échangées.
+
